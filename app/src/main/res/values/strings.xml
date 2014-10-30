@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SoundToLight</string>
+    <string name="hello_world">This application turns sounds from your microphone into light on the screen! Press the button below to try it out.</string>
+    <string name="start">Start Sound to Light</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_sound_to_light_fullscreen">SoundToLightFullscreen</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content"></string>
+
+</resources>
