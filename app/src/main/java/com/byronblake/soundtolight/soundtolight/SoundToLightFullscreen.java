@@ -156,19 +156,24 @@ public class SoundToLightFullscreen extends Activity {
             super(context);
         }
 
+        private int cnt = 0;
+
         @Override
         protected void onDraw(Canvas canvas) {
             // TODO Auto-generated method stub
             super.onDraw(canvas);
-            int x = getWidth();
-            int y = getHeight();
-            int radius;
-            radius = 100;
+            // wipe the canvas
+            canvas.drawColor(Color.BLACK);
+            // color the canvas
             Paint paint = new Paint();
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.WHITE);
             paint.setAlpha(last_alpha);
             canvas.drawPaint(paint);
+
+            if(cnt++ % 10 == 0) {
+//                System.out.println(System.currentTimeMillis());
+            }
             // invalidate and start again
             invalidate();
         }
