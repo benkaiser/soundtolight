@@ -4,10 +4,14 @@ import com.byronblake.soundtolight.soundtolight.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
@@ -142,10 +146,37 @@ public class SoundToLightFullscreen extends Activity {
         mSensor.start();
         // start the poll task
         mHandler.postDelayed(mPollTask, POLL_INTERVAL);
+
+        // set up drawing canvas
+        setContentView(new MyView(this));
+    }
+
+    public class MyView extends View {
+        public MyView(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            // TODO Auto-generated method stub
+            super.onDraw(canvas);
+            int x = getWidth();
+            int y = getHeight();
+            int radius;
+            radius = 100;
+            Paint paint = new Paint();
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.WHITE);
+            paint.setAlpha(last_alpha);
+            canvas.drawPaint(paint);
+            // invalidate and start again
+            invalidate();
+        }
     }
 
     private double last_amp_smooth = 0.0;
     private double smoothing_factor = 0.4;
+    private int last_alpha = 0;
 
     private void updateDisplay(double amp){
         // smooth out the amplitude
@@ -156,9 +187,7 @@ public class SoundToLightFullscreen extends Activity {
         if(alpha > 255){
             alpha = 255;
         }
-        // change the color of the background
-        View view = findViewById(R.id.main_frame_layout);
-        view.setBackgroundColor(Color.argb(alpha, 255, 255, 255));
+        last_alpha = alpha;
     }
 
     @Override
