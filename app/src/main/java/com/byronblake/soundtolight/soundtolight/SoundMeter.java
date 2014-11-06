@@ -37,6 +37,14 @@ public class SoundMeter {
         }
     }
 
+    public boolean isRecording() {
+        if(ar == null){
+            return false;
+        } else {
+            return ar.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING;
+        }
+    }
+
     public double getAmplitude() {
         short[] buffer = new short[minSize];
         ar.read(buffer, 0, minSize);

@@ -80,7 +80,9 @@ public class SoundToLightFullscreen extends Activity {
         super.onCreate(savedInstanceState);
 
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().hide();
+        if (android.os.Build.VERSION.SDK_INT >= 11) {
+            getActionBar().hide();
+        }
 
         setContentView(R.layout.sound_to_light_fullscreen_activity);
         setupActionBar();
@@ -237,6 +239,24 @@ public class SoundToLightFullscreen extends Activity {
     public void onStop() {
         super.onStop();
         stop();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mHandler.removeCallbacks(mPollTask);
+        mSensor.stop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("Resuming");
+        if(!mSensor.isRecording()){
+            System.out.println("Starting");
+            mSensor.start();
+        }
+        mHandler.postDelayed(mPollTask, POLL_INTERVAL);
     }
 
     private void sleep() {
